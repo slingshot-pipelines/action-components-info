@@ -31,7 +31,6 @@ jobs:
       -
         uses: actions/checkout@v6
       -
-        name: Validate readiness
-        uses: ./.
+        uses: slingshot-pipelines/action-pr-ready@v0
         with:
           NEEDS: ${{ toJSON(needs) }}
