@@ -1,0 +1,31 @@
+name: tag-and-release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+
+  tag-and-release:
+    uses: rx-refill-reminders/pipeline/.github/workflows/tag-and-push.yml@tag-and-push/v0
+    with:
+      JOB_NAME: tag-and-release
+      TAG_PREFIX: v
+      FLOATING_TAGS: true
+    secrets:
+      APP_CLIENT_ID: ${{ secrets.WRITER_APP_CLIENT_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.WRITER_APP_PRIVATE_KEY }}

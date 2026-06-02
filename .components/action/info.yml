@@ -1,0 +1,5 @@
+component: action
+type: github-action
+
+paths:
+  - '.'

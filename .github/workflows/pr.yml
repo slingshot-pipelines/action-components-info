@@ -18,6 +18,20 @@ concurrency:
 
 jobs:
 
-  pr:
-    uses: rx-refill-reminders/pipeline/.github/workflows/pr.yml@pr/v0
+  lint:
+    uses: rx-refill-reminders/pipeline/.github/workflows/check-github-actions.yml@check-github-actions/v0
+    with:
+      COMPONENT: action
     secrets: inherit
+
+  pr-ready:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      -
+        uses: actions/checkout@v6
+      -
+        name: Validate readiness
+        uses: ./.
+        with:
+          NEEDS: ${{ toJSON(needs) }}

@@ -1,0 +1,29 @@
+name: Parse the .components directory
+description: ""
+
+inputs: {}
+
+outputs:
+  COMPONENTS:
+    description: JSON map of components info
+    value: ${{ steps.parse-infos.outputs.parsed }}
+
+runs:
+  using: composite
+  steps:
+    -
+      shell: bash
+      id: parse-infos
+      run: |
+        # Parse components info
+
+        echo "::group::Parsing components info"
+
+        ALL_COMPONENTS_JSON=$("${{ github.action_path }}/action.sh")
+
+        printf '%s' "$ALL_COMPONENTS" | jq '.'
+
+        echo "::endgroup::"
+
+        echo "parsed=$ALL_COMPONENTS_JSON" >> "$GITHUB_OUTPUT"
+        
