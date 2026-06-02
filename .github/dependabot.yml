@@ -1,0 +1,10 @@
+# https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference
+
+version: 2
+
+updates:
+  -
+    package-ecosystem: github-actions
+    schedule:
+      interval: weekly
+    directory: /

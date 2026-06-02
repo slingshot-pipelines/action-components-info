@@ -1,0 +1,32 @@
+name: terragrunt-unlock
+
+run-name: "Unlock ${{ inputs.STACK }}/${{ inputs.UNIT }}"
+
+on:
+
+  workflow_dispatch:
+    inputs:
+      STACK:
+        description: 'stack:'
+        type: string
+        required: true
+      UNIT:
+        description: 'unit:'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+
+  unlock:
+    uses: rx-refill-reminders/pipeline/.github/workflows/terragrunt-unlock.yml@terragrunt-unlock/v0
+    with:
+      STACK: ${{ inputs.STACK }}
+      UNIT: ${{ inputs.UNIT }}

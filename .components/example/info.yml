@@ -1,0 +1,3 @@
+path: example
+component: infra
+type: terragrunt-infra

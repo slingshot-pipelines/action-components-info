@@ -1,0 +1,6 @@
+.DS_Store
+.vscode
+.tool-versions
+.terragrunt-cache/
+.terragrunt-stack/
+dist/
