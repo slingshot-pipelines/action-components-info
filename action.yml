@@ -19,13 +19,6 @@ runs:
       run: |
         # Parse components info
 
-        echo "::group::Parsing components info"
-
         ALL_COMPONENTS_JSON=$("${SCRIPT_FILE}")
-
-        printf '%s' "$ALL_COMPONENTS_JSON" | jq '.'
-
-        echo "::endgroup::"
-
-        echo "parsed=$ALL_COMPONENTS_JSON" >> "$GITHUB_OUTPUT"
+        echo "parsed=$ALL_COMPONENTS_JSON" | tee -a "$GITHUB_OUTPUT"
         
