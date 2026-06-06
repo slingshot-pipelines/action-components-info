@@ -14,14 +14,16 @@ runs:
     -
       shell: bash
       id: parse-infos
+      env:
+        SCRIPT_FILE: ${{ github.action_path }}/action.sh
       run: |
         # Parse components info
 
         echo "::group::Parsing components info"
-        
-        pwd
 
-        ALL_COMPONENTS_JSON=$("${{ github.action_path }}/action.sh")
+        find .components
+
+        ALL_COMPONENTS_JSON=$("${SCRIPT_FILE}")
 
         printf '%s' "$ALL_COMPONENTS" | jq '.'
 
