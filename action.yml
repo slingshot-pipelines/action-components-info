@@ -4,9 +4,9 @@ description: ""
 inputs: {}
 
 outputs:
-  COMPONENTS:
+  info:
     description: JSON map of components info
-    value: ${{ steps.parse-infos.outputs.parsed }}
+    value: ${{ steps.parse-infos.outputs.info }}
 
 runs:
   using: composite
@@ -14,16 +14,11 @@ runs:
     -
       shell: bash
       id: parse-infos
+      env:
+        SCRIPT_FILE: ${{ github.action_path }}/action.sh
       run: |
         # Parse components info
 
-        echo "::group::Parsing components info"
-
-        ALL_COMPONENTS_JSON=$("${{ github.action_path }}/action.sh")
-
-        printf '%s' "$ALL_COMPONENTS" | jq '.'
-
-        echo "::endgroup::"
-
-        echo "parsed=$ALL_COMPONENTS_JSON" >> "$GITHUB_OUTPUT"
+        ALL_COMPONENTS_JSON=$("${SCRIPT_FILE}")
+        echo "info=$ALL_COMPONENTS_JSON" | tee -a "$GITHUB_OUTPUT"
         

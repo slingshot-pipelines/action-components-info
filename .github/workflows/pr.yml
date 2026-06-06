@@ -19,7 +19,7 @@ concurrency:
 jobs:
 
   lint:
-    uses: rx-refill-reminders/pipeline/.github/workflows/check-github-actions.yml@check-github-actions/v0
+    uses: slingshot-pipelines/workflows/.github/workflows/check-github-actions.yml@check-github-actions/v0
     with:
       COMPONENT: action
     secrets: inherit
@@ -28,8 +28,6 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      -
-        uses: actions/checkout@v6
       -
         uses: slingshot-pipelines/action-pr-ready@v0
         with:
