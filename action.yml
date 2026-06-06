@@ -4,7 +4,7 @@ description: ""
 inputs: {}
 
 outputs:
-  COMPONENTS:
+  info:
     description: JSON map of components info
     value: ${{ steps.parse-infos.outputs.parsed }}
 
