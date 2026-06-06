@@ -21,7 +21,7 @@ concurrency:
 jobs:
 
   tag-and-release:
-    uses: rx-refill-reminders/pipeline/.github/workflows/tag-and-push.yml@tag-and-push/v0
+    uses: slingshot-pipelines/workflows/.github/workflows/tag-and-release.yml@tag-and-release/v0
     with:
       JOB_NAME: tag-and-release
       TAG_PREFIX: v
