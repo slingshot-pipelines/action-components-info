@@ -18,6 +18,8 @@ runs:
         # Parse components info
 
         echo "::group::Parsing components info"
+        
+        pwd
 
         ALL_COMPONENTS_JSON=$("${{ github.action_path }}/action.sh")
 
