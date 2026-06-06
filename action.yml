@@ -21,11 +21,9 @@ runs:
 
         echo "::group::Parsing components info"
 
-        find .components
-
         ALL_COMPONENTS_JSON=$("${SCRIPT_FILE}")
 
-        printf '%s' "$ALL_COMPONENTS" | jq '.'
+        printf '%s' "$ALL_COMPONENTS_JSON" | jq '.'
 
         echo "::endgroup::"
 
