@@ -3,3 +3,6 @@ type: github-action
 
 paths:
   - '.'
+
+action-root: .
+source-language: composite

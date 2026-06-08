@@ -16,17 +16,20 @@ INFO_FILES=$(find .components \
 
 ALL_COMPONENTS='{}'
 
-
 # Add a .components component
 ALL_COMPONENTS=$(echo "$ALL_COMPONENTS" \
     | jq -rc \
         '. | .[".components"] = { component: ".components", type: "components", path: ".components" }')
 
-# Add a .github component, if appropriate
-if [[ -d ".github/actions" || -d ".github/workflows" ]]; then
+# Add a github-workflows component, if appropriate
+if [[ -d ".github/workflows" ]]; then
     ALL_COMPONENTS=$(echo "$ALL_COMPONENTS" \
         | jq -rc \
-            '. | .[".github"] = { component: ".github", type: "github-actions" }')
+            '. | .["github-workflows"] = { component: ".github", type: "github-actions" }')
+    
+    ALL_COMPONENTS=$(echo "$ALL_COMPONENTS" \
+        | jq -rc \
+            '. | .["github-workflows"] = { component: "github-workflows", type: "github-workflows", path: ".github/workflows" }')
 fi
 
 while IFS='' read -r INFO_FILE && [[ -n "$INFO_FILE" ]]; do
