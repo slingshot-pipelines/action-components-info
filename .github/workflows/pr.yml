@@ -19,12 +19,13 @@ concurrency:
 jobs:
 
   lint:
-    uses: slingshot-pipelines/workflows/.github/workflows/check-github-actions.yml@check-github-actions/v0
+    uses: slingshot-pipelines/workflows/.github/workflows/check-github-workflows.yml@check-github-workflows/v0
     with:
       COMPONENT: action
     secrets: inherit
 
   pr-ready:
+    if: ${{ always() }}
     needs: lint
     runs-on: ubuntu-latest
     steps:
