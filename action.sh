@@ -29,7 +29,7 @@ if [[ -d ".github/workflows" ]]; then
     
     ALL_COMPONENTS=$(echo "$ALL_COMPONENTS" \
         | jq -rc \
-            '. | .["github-workflows"] = { component: "github-workflows", type: "github-workflows", path: ".github/workflows" }')
+            '. | .["github-workflows"] = { component: ".github/workflows", type: "github-workflows", path: ".github/workflows" }')
 fi
 
 while IFS='' read -r INFO_FILE && [[ -n "$INFO_FILE" ]]; do
