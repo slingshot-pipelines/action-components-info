@@ -18,16 +18,58 @@ concurrency:
 
 jobs:
 
-  lint:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changed-component-types: ${{ steps.components-changed.outputs.changed-component-types }}
+      changed-components-by-type: ${{ steps.components-changed.outputs.changed-components-by-type }}
+    steps:
+      -
+        uses: actions/checkout@v6
+      -
+        name: Detect changed components
+        id: components-changed
+        uses: slingshot-pipelines/action-components-changed@v1
+
+  check-components:
+    needs:
+      - detect-changes
+    if: ${{ contains(needs.detect-changes.outputs.changed-component-types, '"components"') }}
+    uses: slingshot-pipelines/workflows/.github/workflows/check-components.yml@check-components/v0
+    secrets: inherit
+
+  check-github-workflows:
+    needs:
+      - detect-changes
+    if: ${{ contains(needs.detect-changes.outputs.changed-component-types, '"github-workflows"') }}
     uses: slingshot-pipelines/workflows/.github/workflows/check-github-workflows.yml@check-github-workflows/v0
+    strategy:
+      matrix:
+        COMPONENT: ${{ fromJSON(needs.detect-changes.outputs.changed-components-by-type).github-workflows }}
     with:
-      COMPONENT: action
+      COMPONENT: ${{ matrix.COMPONENT }}
+    secrets: inherit
+
+  check-github-action:
+    needs:
+      - detect-changes
+    if: ${{ contains(needs.detect-changes.outputs.changed-component-types, '"github-action"') }}
+    uses: slingshot-pipelines/workflows/.github/workflows/check-github-action.yml@check-github-action/v0
+    strategy:
+      matrix:
+        COMPONENT: ${{ fromJSON(needs.detect-changes.outputs.changed-components-by-type).github-action }}
+    with:
+      COMPONENT: ${{ matrix.COMPONENT }}
     secrets: inherit
 
   pr-ready:
-    if: ${{ always() }}
-    needs: lint
+    needs:
+      - detect-changes
+      - check-components
+      - check-github-workflows
+      - check-github-action
     runs-on: ubuntu-latest
+    if: ${{ always() }}
     steps:
       -
         uses: slingshot-pipelines/action-pr-ready@v0
