@@ -1,8 +1,5 @@
 component: action
 type: github-action
 
-paths:
-  - '.'
-
-action-root: .
+path: .
 source-language: composite
