@@ -39,7 +39,7 @@ while IFS='' read -r INFO_FILE && [[ -n "$INFO_FILE" ]]; do
         | jq -rc \
             --argjson project "$PROJECT_JSON" \
             --argjson component "$COMPONENT_JSON" \
-            '. | .[$component.component] = ($component + $project | .fullname |= "\($project.project)/\($component.component)")')
+            '. | .[$component.component] = ($project + $component | .fullname |= "\($project.project)/\($component.component)")')
 done <<< "$INFO_FILES"
 
 printf '%s' "$ALL_COMPONENTS"
